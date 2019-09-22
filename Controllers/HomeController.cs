@@ -13,6 +13,8 @@ namespace WebApplicationFramework.Controllers
     {
         FightsContext fightsContext;
 
+
+        //some changes
         public HomeController()
         {
             fightsContext = new FightsContext();
