@@ -1,0 +1,79 @@
+﻿@model WebApplicationFramework.Models.UserPageViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Сторінка учасника</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/Styles/IndexStyle.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/Styles/PopUpStyle.css">
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="container-fluid view-container">
+        <div class="row">
+            <div class="col-md-9">
+                <h3>@Model.Name</h3>
+                <p>Вік : @Model.Age</p>
+                <p>Вага : @Model.Weight</p>
+                <p>Поточний рейтинг : @Model.Rating</p>
+
+                <h3>Проведені бої</h3>
+                <table style="width:100%">
+                    <tr>
+                        <th><p>Дата</p></th>
+                        <th><p>Кількість проведений раундів</p></th>
+                        <th><p>Противник</p></th>
+                        <th><p>Результат</p></th>
+                        <th><p></p></th>
+                    </tr>
+
+                    @foreach (var fight in Model.fights)
+                    {
+                        ViewBag.Result = fight.Result ? "Перемога" : "Поразка";
+                        <tr>
+                            <td><p>@fight.Time.ToShortDateString()</p></td>
+                            <td><p>@fight.Rounds</p></td>
+                            <td><p>@fight.EnemyName</p></td>
+                            <td><p>@ViewBag.Result</p></td>
+                            <td>
+                                <a class="show" data-fightid ="@fight.Id" data-fighterId="@Model.Id"href=""> Переглянути</a>
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup">
+        <div class="popuptext" id="myPopup">
+            <div class="panel">
+                <div id="results"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+
+            $(".show").click(function (e) {
+                e.preventDefault();
+                var Id = $(this).attr("data-fightid");
+                var FighterId = $(this).attr("data-fighterId");
+                ShowPopUp(Id, FighterId);
+            })
+
+            function ShowPopUp(id, fighterId) {
+                $("#myPopup").addClass("show");
+                $("#results").load("/home/FightPage?FightId=" + id + "&FighterId=" + fighterId);
+            }
+        });
+    </script>
+</body>
+</html>

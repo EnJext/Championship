@@ -1,0 +1,10 @@
+﻿table, th, td {
+    border: 1px solid dodgerblue;
+    text-align: center;
+    font-size: medium;
+}
+
+h3{
+    color: dodgerblue;
+    text-align: left;
+}

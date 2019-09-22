@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap-grid.css"/>
+    <link rel="stylesheet" type="text/css" href="~/Content/Styles/LoyoutStyle.css">
+    <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light fixed-top">
+        <div class="menu-container">
+            <a class="menu-item" href="@Url.Action("Index","Home")">Головна</a>
+            <a class="menu-item" href="@Url.Action("Championship", "Home")">
+                Чемпіонат
+            </a>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        @RenderBody()
+    </div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+﻿h2{
+    text-align:center;
+}
+
+h3 {
+    text-align: center;
+}
+
+.menu-container {
+    margin-left: 20px;
+}
+
+.main-content{
+    margin-top:70px;
+}
+
+.menu-item{
+    font-size:26px;
+    margin-right:40px;
+}
+
+.view-container {
+    padding-left: 35px;
+    padding-right: 35px;
+    margin-bottom:20px;
+}

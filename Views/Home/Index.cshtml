@@ -1,0 +1,40 @@
+﻿@model IEnumerable<WebApplicationFramework.Models.IndexViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Чемпіонат по боксу</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/Styles/IndexStyle.css">
+</head>
+<body>
+    <div class="container-fluid view-container">
+        <div class="row">
+            <div class="col-md-8">
+                <h3> Рейтниг учасників турніру</h3>
+                <table style="width:100%">
+                    <tr>
+                        <th><p>Рейтинг</p></th>
+                        <th><p>Учасник</p></th>
+                        <th><p>Кількість боїв</p></th>
+                        <th><p></p></th>
+                    </tr>
+                    @foreach (var b in Model)
+                    {
+                        <tr>
+                            <td><p>@b.Rank</p></td>
+                            <td><p>@b.Name</p></td>
+                            <td><p>@b.Rounds</p></td>
+                            <td><a href="/home/UserPage?UserId=@b.Id">Переглянути</a></td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

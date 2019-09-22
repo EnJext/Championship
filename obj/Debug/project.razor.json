@@ -1,0 +1,16 @@
+{
+  "FilePath": "c:\\Users\\Valik\\source\\repos\\WebApplicationFramework\\WebApplicationFramework.csproj",
+  "Configuration": {
+    "ConfigurationName": "UnsupportedRazor",
+    "LanguageVersion": "1.0",
+    "Extensions": [
+      {
+        "ExtensionName": "UnsupportedRazorExtension"
+      }
+    ]
+  },
+  "ProjectWorkspaceState": null,
+  "RootNamespace": null,
+  "Documents": [],
+  "SerializationFormat": "0.2"
+}

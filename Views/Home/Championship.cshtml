@@ -1,0 +1,141 @@
+﻿
+<html>
+<head>
+    <title>Чемпіонат</title>
+    <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Styles/Championship.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.jqGrid.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/i18n/grid.locale-ru.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="container-fluid view-container">
+
+        <div class="row">
+            <div class="col-md-11 blue-border" id="fight-table-parent">
+                <h2 class="Champ-title">Таблиця боїв</h2>
+                <table id="fight-table"></table>
+                <div id="jpager"></div>
+                <br />
+            </div>
+        </div>
+
+        <div class="row"><br /></div>
+
+        <div class="row">
+            <div class="col-md-11 blue-border">
+                <h2 class="Champ-title">Фільтр пошуку боїв</h2>
+                <br />
+                <form id="SearchForm">
+                    <div class="row">
+                        <div class="form-group col-xl-5">
+                            <label>Дата:</label><br />
+                            з: <input type="date" name="BeginDate" id="BeginDate" value="" placeholder="">
+                            по : <input type="date" name="EndDate" id="EndDate" value="" placeholder="">
+                        </div>
+                        <div class="form-group col-xl-3">
+                            <label>Учасник:</label> <br />
+                            <input type="text" placeholder="Введіть ім'я учасника" name="Name" id="Name" value=""
+                                   data-autocomplete-source='@Url.Action("AutocompleteSearch", "Home")' />
+                        </div>
+                        <div class="form-group col-xl-2">
+                            <label>Результат:</label> <br />
+                            <input type="hidden" value="Не вибрано" name="Result" id="ResultInput" />
+                            <select id="result-selector">
+                                <option value="Не вибрано">Не вибрано</option>
+                                <option value="Пeремога">Перемога</option>
+                                <option value="Поразка">Поразка</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-xl-2">
+                            <label>Пошук</label> <br />
+                            <input type="submit" value="Пошук" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+    <script>
+        $(document).ready(function () {
+
+
+            $("#fight-table").jqGrid({
+                url: "@Url.Action("GetFightsDataToJqGrid")",
+                datatype: "json",
+                colNames: ["Дата проведення", "К-сть Раундів", "Переможець", "Програвший", "Видалення"],
+                colModel: [
+                { name: 'Time', index: 'Time',  autowidth: true ,  formatter: "date",
+                 formatoptions: { srcformat: "ISO8601Long", newformat: "m/d/Y" },},
+                { name: 'Rounds', index: 'Rounds',autowidth: true,  stype: 'number' },
+                { name: 'Winner', index: 'Winner',autowidth: true,  stype: 'text'},
+                { name: 'Losser', index: 'Losser', autowidth: true, stype: 'text' },
+                { name: 'button', index: 'button', autowidth: true}
+                ],
+                pager: "#jpager",
+                height: '100%',
+                width: "100%",
+                rowNum: 8,
+                loadonce:true,
+                sortname: 'Time',
+                sortorder: "desc",
+                caption: "Чемпіонат"
+            });
+
+            $("#result-selector").change(function(){
+                var selectedResult = $(this).children("option:selected").val();
+                $("#ResultInput").val(selectedResult)
+            });
+
+            $("#SearchForm").submit(function (event) {
+                event.preventDefault();
+
+                $.ajax({
+                    url: "@Url.Action("GetSearchFightsData","Home")",
+                    dataType: "json",
+                    type: "POST",
+                    data: {
+                        BeginDate: $("#BeginDate").val(),
+                        EndDate: $("#EndDate").val(),
+                        Name: $("#Name").val(),
+                        Result: $("#ResultInput").val(),
+                    },
+                    success: function (gridData) { UpDateJqGrid(gridData);}
+                })
+            })
+
+            $(window).bind('resize', function() {
+                $("#fight-table").setGridWidth($("#fight-table-parent").width()-7, true);
+            }).trigger('resize');
+
+            $("[data-autocomplete-source]").each(function () {
+                var target = $(this);
+                target.autocomplete({ source: target.attr("data-autocomplete-source") });
+            });
+
+                   function Deletefight(Id) {
+            $.ajax({
+                url: "@Url.Action("DeleteFight","Home")",
+                data: { Id: Id },
+                type: "POST",
+                success: function (gridData) { UpDateJqGrid(gridData);}
+            })
+        }
+
+        function UpDateJqGrid(gridData) {
+            var table = $("#fight-table");
+            table.jqGrid("clearGridData");
+            table.jqGrid("setGridParam", { data: gridData });
+            table.trigger("reloadGrid");
+        }
+
+        });
+    </script>
+</body>
+</html>
