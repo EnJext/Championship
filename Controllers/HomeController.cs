@@ -106,7 +106,7 @@ namespace WebApplicationFramework.Controllers
                        Rounds = fight.Rounds,
                        Winner = Winner.Name,
                        Losser = Losser.Name,
-                       button = "<button onclick='javascript:Deletefight(" + fight.FightId+")' style='width:100%;' > Видалити </button>"
+                       button = "<button data-fightId = '"+ fight.FightId + "' style='width:100%;' > Видалити </button>"
                    };
         }
 

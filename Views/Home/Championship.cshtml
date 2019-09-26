@@ -65,7 +65,6 @@
     <script>
         $(document).ready(function () {
 
-
             $("#fight-table").jqGrid({
                 url: "@Url.Action("GetFightsDataToJqGrid")",
                 datatype: "json",
@@ -85,7 +84,15 @@
                 loadonce:true,
                 sortname: 'Time',
                 sortorder: "desc",
-                caption: "Чемпіонат"
+                caption: "Чемпіонат",
+                gridComplete: function(){
+                    var buttons = $("[data-fightid]");
+                    buttons.each(function (index, elem) {
+                        $(elem).click(function () {
+                            Deletefight($(elem).data().fightid);
+                        });
+                    });
+                }
             });
 
             $("#result-selector").change(function(){
@@ -106,9 +113,9 @@
                         Name: $("#Name").val(),
                         Result: $("#ResultInput").val(),
                     },
-                    success: function (gridData) { UpDateJqGrid(gridData);}
-                })
-            })
+                    success: function (gridData) { UpDateJqGrid(gridData); }
+                });
+            });
 
             $(window).bind('resize', function() {
                 $("#fight-table").setGridWidth($("#fight-table-parent").width()-7, true);
@@ -119,20 +126,20 @@
                 target.autocomplete({ source: target.attr("data-autocomplete-source") });
             });
 
-                   function Deletefight(Id) {
-            $.ajax({
-                url: "@Url.Action("DeleteFight","Home")",
-                data: { Id: Id },
-                type: "POST",
-                success: function (gridData) { UpDateJqGrid(gridData);}
-            })
-        }
-
-        function UpDateJqGrid(gridData) {
+            function UpDateJqGrid(gridData) {
             var table = $("#fight-table");
             table.jqGrid("clearGridData");
             table.jqGrid("setGridParam", { data: gridData });
             table.trigger("reloadGrid");
+            }
+
+            function Deletefight(Id) {
+                    $.ajax({
+                        url: "@Url.Action("DeleteFight","Home")",
+                        data: { Id: Id },
+                        type: "POST",
+                        success: function (gridData) { UpDateJqGrid(gridData); }
+                    });
             }
 
 
