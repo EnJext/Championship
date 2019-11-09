@@ -40,7 +40,7 @@
                         <div class="form-group col-xl-3">
                             <label>Учасник:</label> <br />
                             <input type="text" placeholder="Введіть ім'я учасника" name="Name" id="Name" value=""
-                                   data-autocomplete-source='@Url.Action("AutocompleteSearch", "Home")' />
+                                   data-autocomplete-source='@Url.Action("AutocompleteSearch")' />
                         </div>
                         <div class="form-group col-xl-2">
                             <label>Результат:</label> <br />
@@ -104,7 +104,7 @@
                 event.preventDefault();
 
                 $.ajax({
-                    url: "@Url.Action("GetSearchFightsData","Home")",
+                    url: "@Url.Action("GetSearchFightsData")",
                     dataType: "json",
                     type: "POST",
                     data: {
@@ -135,7 +135,7 @@
 
             function Deletefight(Id) {
                     $.ajax({
-                        url: "@Url.Action("DeleteFight","Home")",
+                        url: "@Url.Action("DeleteFight")",
                         data: { Id: Id },
                         type: "POST",
                         success: function (gridData) { UpDateJqGrid(gridData); }

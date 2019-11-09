@@ -5,7 +5,7 @@
         <div class="row">
             <h4 style="margin-bottom:15px;">Внесення/Перегляд бою</h4>
         </div>
-        @using (Html.BeginForm("AddFight", "Home"))
+        @using (Html.BeginForm("AddFight", "User"))
         {
             @Html.HiddenFor(m => m.FighterId)
             @Html.HiddenFor(m => m.FightId)

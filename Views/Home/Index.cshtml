@@ -28,7 +28,7 @@
                             <td><p>@b.Rank</p></td>
                             <td><p>@b.Name</p></td>
                             <td><p>@b.Rounds</p></td>
-                            <td><a href="/home/UserPage?UserId=@b.Id">Переглянути</a></td>
+                            <td><a href="@Url.Action("UserPage", "User", new { UserId=b.Id})">Переглянути</a></td>
                         </tr>
                     }
                 </table>
