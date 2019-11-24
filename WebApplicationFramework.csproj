@@ -125,6 +125,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ChampionshipController.cs" />
+    <Compile Include="Controllers\FightController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -141,6 +142,14 @@
     <Compile Include="Migrations\201909212043496_FightsContext-v2.cs" />
     <Compile Include="Migrations\201909212043496_FightsContext-v2.Designer.cs">
       <DependentUpon>201909212043496_FightsContext-v2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911241835133_Fight_LosserFKUpdate.cs" />
+    <Compile Include="Migrations\201911241835133_Fight_LosserFKUpdate.Designer.cs">
+      <DependentUpon>201911241835133_Fight_LosserFKUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911241844232_Fight_WinnerFKUpdate.cs" />
+    <Compile Include="Migrations\201911241844232_Fight_WinnerFKUpdate.Designer.cs">
+      <DependentUpon>201911241844232_Fight_WinnerFKUpdate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Fight.cs" />
@@ -317,7 +326,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\User\UserPage.cshtml" />
-    <Content Include="Views\User\FightPage.cshtml" />
+    <Content Include="Views\Fight\FightPage.cshtml" />
     <Content Include="Views\Championship\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
@@ -347,6 +356,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201909212043496_FightsContext-v2.resx">
       <DependentUpon>201909212043496_FightsContext-v2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911241835133_Fight_LosserFKUpdate.resx">
+      <DependentUpon>201911241835133_Fight_LosserFKUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911241844232_Fight_WinnerFKUpdate.resx">
+      <DependentUpon>201911241844232_Fight_WinnerFKUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

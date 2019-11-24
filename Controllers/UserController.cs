@@ -50,66 +50,7 @@ namespace WebApplicationFramework.Controllers
         }
 
 
-        [HttpPost]
-        public ActionResult AddFight(FightPageViewModel fight) //User (Fight)
-        {
-            AddFightByFightPageModel(fight);
-            return RedirectToAction(nameof(UserPage), new { UserId = fight.FighterId });
-        }
 
-
-        private bool AddFightByFightPageModel(FightPageViewModel fight)
-        {
-            Fighter Winner = fightsContext.Fighters.Where(p => p.Name == fight.Winner).FirstOrDefault();
-            Fighter Losser = fightsContext.Fighters.Where(p => p.Name == fight.Losser).FirstOrDefault();
-
-            if (Winner != null && Losser != null)
-            {
-                var TimeParam = new SqlParameter("@Time", fight.Time);
-                var RoundsPram = new SqlParameter("@Rounds", fight.Rounds);
-                var WinnerIdParam = new SqlParameter("@WinnerId", Winner.Id);
-                var LosserIdParam = new SqlParameter("@LosserId", Losser.Id);
-                var Judge1Param = new SqlParameter("@Judge1", fight.Judge1);
-                var Judge2Param = new SqlParameter("@Judge2", fight.Judge2);
-                var Judge3Param = new SqlParameter("@Judge3", fight.Judge3);
-
-                fightsContext.Database.ExecuteSqlCommand("exec AddFight @Time, @Rounds, @WinnerId, @LosserId," +
-                    "@Judge1, @Judge2, @Judge3", TimeParam, RoundsPram, WinnerIdParam, LosserIdParam, Judge1Param,
-                    Judge2Param, Judge3Param);
-
-                return true;
-            }
-            return false;
-        }
-
-
-        public ActionResult FightPage(int? FightId, int? FighterId) //User (Fight)
-        {
-            if (FightId == null || FighterId == null)
-            {
-                return Content(" Error: FightId or FighterId key is null");
-            }
-
-            Fight fight = fightsContext.Fights.Find(FightId);
-
-            fightsContext.Entry(fight).Reference(s => s.Winner).Load();
-            fightsContext.Entry(fight).Reference(s => s.Losser).Load();
-
-            FightPageViewModel Model = new FightPageViewModel
-            {
-                FighterId = FighterId.Value,
-                FightId = fight.FightId,
-                Losser = fight.Winner.Name,
-                Winner = fight.Losser.Name,
-                Judge1 = fight.Judge1,
-                Judge2 = fight.Judge2,
-                Judge3 = fight.Judge3,
-                Rounds = fight.Rounds,
-                Time = fight.Time
-            };
-
-            return PartialView(Model);
-        }
 
 
     }

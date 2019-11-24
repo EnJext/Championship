@@ -1,19 +1,20 @@
-﻿@model WebApplicationFramework.Models.FightPageViewModel
+﻿@model WebApplicationFramework.Models.Fight
+
 <div>
 
     <div class="container-fluid" id="form" style="margin-top:15px; margin-bottom:15px;">
         <div class="row">
             <h4 style="margin-bottom:15px;">Внесення/Перегляд бою</h4>
         </div>
-        @using (Html.BeginForm("AddFight", "User"))
+        @using (Html.BeginForm("AddFight", "Fight"))
         {
-            @Html.HiddenFor(m => m.FighterId)
             @Html.HiddenFor(m => m.FightId)
+            <input type="hidden"  name="FighterId" id="FighterId" value="@TempData["FighterId"]" />
             <div class="row">
                 <div class="col-5">
                     @Html.LabelFor(m => m.Time, "Дата проведення :")<br />
-                    @Html.LabelFor(m => m.Winner, "Переможець      :")<br />
-                    @Html.LabelFor(m => m.Losser, "Програвший    :")<br />
+                    @Html.LabelFor(m => m.Winner.Name, "Переможець      :")<br />
+                    @Html.LabelFor(m => m.Losser.Name, "Програвший    :")<br />
                     @Html.LabelFor(m => m.Rounds, "К-сть раундів :")<br />
                     @Html.LabelFor(m => m.Judge1, "Бал 1 Судді  :")<br />
                     @Html.LabelFor(m => m.Judge2, "Бал 2 Судді  :")<br />
@@ -21,8 +22,8 @@
                 </div>
                 <div class="col-6">
                     @Html.TextBoxFor(m => m.Time, "{0:yyyy-MM-dd}", new { @type = "date" })<br />
-                    @Html.TextBoxFor(m => m.Winner, Model.Winner)<br />
-                    @Html.TextBoxFor(m => m.Losser, Model.Losser)<br />
+                    @Html.TextBoxFor(m => m.Winner, Model.Winner.Name)<br />
+                    @Html.TextBoxFor(m => m.Losser, Model.Losser.Name)<br />
                     @Html.TextBoxFor(m => m.Rounds, Model.Rounds.ToString(), new { @type = "number" })<br />
                     @Html.TextBoxFor(m => m.Judge1, Model.Judge1.ToString(), new { @type = "number" })<br />
                     @Html.TextBoxFor(m => m.Judge2, Model.Judge2.ToString(), new { @type = "number" })<br />

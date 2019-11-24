@@ -21,16 +21,15 @@ namespace WebApplicationFramework.Controllers
         public ActionResult Index() //home
         {
             IEnumerable<IndexViewModel> Model = from fighter in fightsContext.Fighters
-                                                let Sum = fighter.Fights.Count == 0 ? 0:fighter.Fights
-                                                .Where(f => f.Winner.Id == fighter.Id)
-                                                .Sum(f => f.Judge1 + f.Judge2 + f.Judge3)
+                                                let Sum = fighter.WinFights.Count() ==0? 0 :
+                                                fighter.WinFights.Sum(f => f.Judge1 + f.Judge2 + f.Judge3)
                                                 orderby Sum descending
                                                 select new IndexViewModel
                                                 {
                                                     Name = fighter.Name,
                                                     Id = fighter.Id,
                                                     Rank = Sum,
-                                                    Rounds = fighter.Fights.Count()
+                                                    Rounds = fighter.WinFights.Count() + fighter.LoseFights.Count()
                                                 };
             return View(Model);
         }
